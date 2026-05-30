@@ -1,0 +1,28 @@
+# CODEOWNERS — requires maintainer review on pull requests touching these paths
+
+# Core adapter contract and status enums
+/cove/adapter.py            @maintainer
+
+# Safety model and schema validators — all security invariants live here
+/adapters/_schema/          @maintainer
+
+# Browser automation safety (URL allowlist, CAPTCHA gate, screenshot redaction)
+/cove/browser/              @maintainer
+
+# Email verification security (job correlation, domain matching, anti-spoofing)
+/cove/email/                @maintainer
+
+# Legal/policy documents — changes require careful review
+/ACCEPTABLE_USE.md          @maintainer
+/SECURITY.md                @maintainer
+/DISCLAIMER.md              @maintainer
+
+# Broker YAML entries — all registry changes need sign-off
+/adapters/brokers/          @maintainer
+
+# Adapter health fixtures — must use synthetic data only
+/adapters/tests/            @maintainer
+
+# Community-facing contribution docs
+/CONTRIBUTING.md            @maintainer
+/docs/adapter-spec.md       @maintainer

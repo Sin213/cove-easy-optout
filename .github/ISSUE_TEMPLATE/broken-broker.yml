@@ -1,0 +1,66 @@
+name: Broken Broker Report
+description: Report that a broker's opt-out flow has changed or stopped working
+labels: ["broken-broker"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Important:** Do NOT include any personal data in this report.
+        If you discovered this issue by running Cove against your own profile,
+        describe the form change in general terms only — do not paste your name,
+        address, email, or any other personal information.
+
+  - type: input
+    id: broker-slug
+    attributes:
+      label: Broker slug
+      description: The slug from the registry (e.g. whitepages, spokeo)
+      placeholder: e.g. whitepages
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: What broke?
+      options:
+        - Form HTML structure changed (selectors no longer work)
+        - CAPTCHA added or changed
+        - Opt-out URL moved or redirects differently
+        - Email confirmation flow changed
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: when-broke
+    attributes:
+      label: Approximate date this started
+      placeholder: e.g. around 2026-05-01
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What changed?
+      description: |
+        Describe the form change in general terms.
+        Do NOT include: your name, email, phone, address, or any personal data.
+        Use synthetic examples (e.g. "the search form no longer has a 'name' input field").
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What was the expected behavior?
+      description: What did the flow look like before it broke? (general terms only, no PII)
+
+  - type: checkboxes
+    id: pii-confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have not included any personal data in this report
+          required: true

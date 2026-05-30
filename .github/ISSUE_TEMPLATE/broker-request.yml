@@ -1,0 +1,105 @@
+name: New Broker Request
+description: Request that a data broker be added to the Cove registry
+labels: ["broker-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before submitting:** Only YAML registry entries are accepted via this template.
+        Adapter implementation (automation code) requires a separate scoped ticket after the YAML entry is merged.
+        Do NOT include any personal data in this request.
+
+  - type: input
+    id: broker-name
+    attributes:
+      label: Broker name
+      placeholder: e.g. PeopleFinders
+    validations:
+      required: true
+
+  - type: input
+    id: opt-out-url
+    attributes:
+      label: Official opt-out URL
+      description: The publicly documented opt-out form or page
+      placeholder: https://www.example.com/optout
+    validations:
+      required: true
+
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Estimated difficulty
+      options:
+        - easy
+        - medium
+        - hard
+        - unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: email-confirm
+    attributes:
+      label: Does the opt-out require email confirmation?
+      options:
+        - "No"
+        - "Yes"
+        - Unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: captcha
+    attributes:
+      label: Is CAPTCHA or bot-detection expected?
+      description: "If yes or unknown, broker will be set captcha_expected: true and manual_fallback_required: true"
+      options:
+        - "No"
+        - "Yes"
+        - Unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: fcra
+    attributes:
+      label: Is this broker FCRA-regulated?
+      description: |
+        FCRA-regulated brokers (Equifax, Experian, TransUnion, LexisNexis, background check CRAs)
+        are permanently excluded from Cove. If yes, this request will be closed.
+      options:
+        - "No — this broker is not FCRA-regulated"
+        - "Yes — this broker IS FCRA-regulated (request will be closed)"
+        - Unknown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: drop-registered
+    attributes:
+      label: Is this broker registered with the California CPPA (DROP-eligible)?
+      description: If yes, you must have verified this against the official CPPA registry at cppa.ca.gov
+      options:
+        - "No or unknown"
+        - "Yes — verified against CPPA registry"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Any other relevant information about the opt-out flow (without personal data)
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have not included any personal identifying information in this request
+          required: true
+        - label: I understand that only a YAML registry entry (no adapter code) will be added initially
+          required: true
+        - label: This broker is not FCRA-regulated
+          required: true

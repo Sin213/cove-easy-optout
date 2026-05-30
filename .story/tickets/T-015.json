@@ -2,13 +2,14 @@
   "blockedBy": [
     "T-004"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nMake broker contributions safe and reviewable.\n\nScope:\n- adapter spec docs\n- CODEOWNERS\n- PR template\n- broker request template\n- broken broker issue template\n- DCO/signoff guidance\n\nAcceptance:\n- Contributor can add YAML-only broker config from template.\n- Security-sensitive docs route to special review.\n- License hygiene warning included for copied datasets/code.",
   "id": "T-015",
   "order": 20,
   "phase": "p6",
-  "status": "open",
+  "status": "complete",
   "title": "Community contribution workflow",
   "type": "chore"
 }
