@@ -2,13 +2,14 @@
   "blockedBy": [
     "T-005"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nCreate a browser automation wrapper with safety boundaries.\n\nScope:\n- Playwright install/runtime helper\n- browser context management\n- timeout/rate-limit settings\n- screenshot/log artifact redaction policy\n- registry URL allowlist enforcement\n- CAPTCHA/access-control detection hook placeholder\n\nAcceptance:\n- Can navigate only to registry-allowed URLs.\n- No page.evaluate with registry/user-supplied strings.\n- No screenshots containing PII are saved by default.\n- CAPTCHA detection path returns manual_required.\n- No real broker adapter yet.",
   "id": "T-006",
   "order": 30,
   "phase": "p2",
-  "status": "open",
+  "status": "complete",
   "title": "Add safe Playwright runtime wrapper",
   "type": "task"
 }
