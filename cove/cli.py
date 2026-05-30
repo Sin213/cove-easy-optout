@@ -1,4 +1,5 @@
 import importlib.metadata
+from pathlib import Path
 
 import click
 
@@ -33,3 +34,19 @@ def run() -> None:
 def report() -> None:
     """Generate a local opt-out status report."""
     click.echo("Report generation coming soon.")
+
+
+@main.command("validate-registry")
+@click.option("--brokers-dir", default=None, type=click.Path(exists=True, path_type=Path))
+def validate_registry(brokers_dir: Path | None) -> None:
+    """Validate all broker YAML files in the registry."""
+    from pydantic import ValidationError
+    from adapters.registry import BROKERS_DIR, load_registry
+
+    target = brokers_dir or BROKERS_DIR
+    try:
+        entries = load_registry(target)
+        click.echo(f"Registry OK: {len(entries)} broker(s) loaded from {target}")
+    except (ValidationError, ValueError) as exc:
+        click.echo(f"Registry validation failed:\n{exc}", err=True)
+        raise SystemExit(1)

@@ -1,0 +1,20 @@
+slug: spokeo
+name: Spokeo
+adapter_type: scripted
+opt_out_url: https://www.spokeo.com/optout
+official_url: https://www.spokeo.com
+difficulty: medium
+region: us
+rescan_days: 45
+status_language:
+  - submitted
+  - awaiting_confirmation
+  - profile_not_visible_as_of_date
+  - manual_required
+  - failed
+requires_dob: false
+requires_email_confirm: true
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+notes: "Requires email confirmation click. Monitor inbox after submission."

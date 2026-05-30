@@ -2,13 +2,14 @@
   "blockedBy": [
     "T-002"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nCreate the contribution-friendly broker registry layer before real automation.\n\nScope:\n- adapters/_schema/\n- adapters/_template/\n- YAML schema\n- registry loader\n- registry validation command\n- sample placeholder broker configs\n\nAcceptance:\n- Valid broker YAML loads.\n- Invalid broker YAML fails with clear errors.\n- Broker URLs are registry-controlled.\n- Registry entries can mark adapter type: config_form, scripted, email_only, manual_only.\n- Includes fields for difficulty, region, rescan_days, official_url, opt_out_url, status language, and safety flags.",
   "id": "T-004",
   "order": 10,
   "phase": "p2",
-  "status": "open",
+  "status": "complete",
   "title": "Implement broker registry schema and loader",
   "type": "task"
 }

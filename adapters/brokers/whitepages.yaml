@@ -1,0 +1,18 @@
+slug: whitepages
+name: Whitepages
+adapter_type: scripted
+opt_out_url: https://www.whitepages.com/suppression_requests
+official_url: https://www.whitepages.com
+difficulty: easy
+region: us
+rescan_days: 30
+status_language:
+  - submitted
+  - profile_not_visible_as_of_date
+  - manual_required
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+notes: "Standard form submission. Profile search available to verify removal."
