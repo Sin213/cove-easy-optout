@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+pip-wheel-metadata/
+.installed.cfg
+*.egg-link
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Cove runtime output (local only — never commit user reports or profile data)
+output/
+reports/
+*.cove-profile
+*.cove-key
+
+# Logs (never commit — may contain PII)
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment / secrets
+.env
+.env.*
+*.secret
