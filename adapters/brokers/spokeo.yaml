@@ -17,4 +17,5 @@ requires_email_confirm: true
 captcha_expected: false
 fcra_regulated: false
 manual_fallback_required: false
+drop_registered: true
 notes: "Requires email confirmation click. Monitor inbox after submission."

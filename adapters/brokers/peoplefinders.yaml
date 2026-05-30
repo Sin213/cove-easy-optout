@@ -16,4 +16,5 @@ requires_email_confirm: false
 captcha_expected: true
 fcra_regulated: false
 manual_fallback_required: true
+drop_registered: true
 notes: "Opt-out form at /manage. CAPTCHA posture unverified — conservative manual_only until tested."

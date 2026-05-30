@@ -8,6 +8,8 @@ This tool is provided for informational and automation purposes only. Nothing in
 
 Submitting an opt-out request does not guarantee removal. Data brokers control their own databases and compliance timelines. Cove submits requests on your behalf; it cannot compel any broker to remove your data.
 
+**Exception — California DROP path:** When using the California DELETE Act (DROP) portal, Cove does not submit on your behalf. The DROP portal (`drop.cppa.ca.gov`) requires your direct action. CPPA-registered brokers must process DROP requests within 45 days.
+
 **Do not rely on this tool as proof of compliance, legal remedy, or confirmation of deletion.**
 
 ## Honest Status Language

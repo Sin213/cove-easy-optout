@@ -45,6 +45,9 @@ class BrokerEntry(BaseModel):
     captcha_expected: bool = False
     fcra_regulated: bool = False
     manual_fallback_required: bool = False
+    # True if broker is registered with CA CPPA and must honor DROP requests.
+    # Verify against current CPPA registry before marking True for any new broker.
+    drop_registered: bool = False
     notes: str = ""
 
     @field_validator("slug")

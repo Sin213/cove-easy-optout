@@ -1,12 +1,13 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nSupport California DROP as a preferred official channel without scripting hostile submissions.\n\nScope:\n- identify CA-registered brokers from official/public registry source\n- match broker registry entries to DROP coverage\n- generate user instructions/status tracking\n\nAcceptance:\n- DROP-covered brokers are flagged.\n- Final government portal submission remains user action unless official API exists.\n- No scripted POST to government portal.",
   "id": "T-013",
   "order": 20,
   "phase": "p5",
-  "status": "open",
+  "status": "complete",
   "title": "DROP helper planning and registry matching",
   "type": "task"
 }

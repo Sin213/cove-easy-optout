@@ -15,4 +15,5 @@ requires_email_confirm: false
 captcha_expected: true
 fcra_regulated: false
 manual_fallback_required: true
+drop_registered: true
 notes: "Standard form submission. Profile search available to verify removal."
