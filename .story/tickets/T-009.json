@@ -1,12 +1,13 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nSupport recurring re-checks because brokers re-list.\n\nScope:\n- schedule model\n- default 90-day rescan\n- broker-specific rescan_days\n- priority for brokers where profile was previously found\n\nAcceptance:\n- Scheduler can queue future scan jobs.\n- Rescan status is visible locally.\n- No background daemon complexity unless needed.",
   "id": "T-009",
   "order": 20,
   "phase": "p3",
-  "status": "open",
+  "status": "complete",
   "title": "Add local rescan scheduler",
   "type": "feature"
 }
