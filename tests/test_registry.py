@@ -57,7 +57,8 @@ def test_whitepages_fields():
     wp = entries["whitepages"]
     assert wp.adapter_type == AdapterType.scripted
     assert not wp.fcra_regulated
-    assert not wp.captcha_expected
+    assert wp.captcha_expected  # updated: Whitepages adapter handles CAPTCHA → manual_required
+    assert wp.manual_fallback_required
 
 
 def test_intelius_captcha_manual_fallback():

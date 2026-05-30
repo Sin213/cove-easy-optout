@@ -4,13 +4,14 @@
     "T-004",
     "T-006"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nImplement one high-value, low-complexity broker adapter after the engine exists.\n\nCandidate:\n- TruePeopleSearch or another Tier-1 broker selected after live/manual inspection.\n\nScope:\n- search\n- match candidate profile\n- submit opt-out or produce manual_required if flow changes\n- verification placeholder if immediate verification is not reliable\n\nAcceptance:\n- Works with a synthetic test identity only.\n- Does not bypass CAPTCHA or access controls.\n- Produces submitted/failed/manual_required honestly.\n- Does not overclaim verified removal unless re-scan confirms it.",
   "id": "T-007",
   "order": 40,
   "phase": "p2",
-  "status": "open",
+  "status": "complete",
   "title": "Implement first Tier-1 broker adapter behind strict safety gates",
   "type": "feature"
 }

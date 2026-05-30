@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-014",
+  "impact": "Link clicks bypass BrowserSession allowlist. Filed as ISS-012. Out of T-007 scope.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[security] Link clicks bypass BrowserSession allowlist. Filed as ISS-012. Out of T-007 scop"
+}

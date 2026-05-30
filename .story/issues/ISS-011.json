@@ -1,0 +1,19 @@
+{
+  "components": [
+    "cove/browser/session.py"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-011",
+  "impact": "navigate() checks the initial URL against the allowlist, but Playwright follows HTTP redirects silently. If a broker redirects the opt-out form to a third-party domain (e.g. OneTrust), the adapter fills forms on an unapproved host with no NavigationBlockedError raised — undermining the stated safety property.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [
+    "T-006",
+    "T-007"
+  ],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "high",
+  "status": "open",
+  "title": "BrowserSession does not intercept HTTP redirects — allowlist bypassed on redirect"
+}

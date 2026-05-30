@@ -12,7 +12,7 @@ status_language:
   - manual_required
 requires_dob: false
 requires_email_confirm: false
-captcha_expected: false
+captcha_expected: true
 fcra_regulated: false
-manual_fallback_required: false
+manual_fallback_required: true
 notes: "Standard form submission. Profile search available to verify removal."

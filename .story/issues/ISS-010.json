@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-010",
+  "impact": "No __init_subclass__ guard for broker_slug/manual_url on BrokerAdapter; fails at runtime not class definition. Acceptable for now.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[clean-code] No __init_subclass__ guard for broker_slug/manual_url on BrokerAdapter; fails at"
+}

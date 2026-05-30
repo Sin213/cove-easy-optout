@@ -1,0 +1,20 @@
+{
+  "components": [
+    "cove/browser/session.py",
+    "adapters/whitepages.py"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-012",
+  "impact": "Clicking a link element (e.g. optout_link.first.click()) navigates the browser without passing through BrowserSession.navigate(). The destination host is never checked against the allowlist. The safety property \"all navigation via BrowserSession\" does not hold for link-based navigation. Fix: register a page.route() handler in BrowserSession that blocks requests to non-allowlist hosts.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [
+    "T-006",
+    "T-007"
+  ],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "high",
+  "status": "open",
+  "title": "Link clicks in adapters bypass BrowserSession URL allowlist"
+}

@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-009",
+  "impact": "run_at and filename use separate datetime.now() calls; can disagree across a second boundary. Acceptable for local tool.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[clean-code] run_at and filename use separate datetime.now() calls; can disagree across a sec"
+}

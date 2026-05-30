@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-013",
+  "impact": "Redirect interception gap in BrowserSession. Filed as ISS-011. Out of T-007 scope.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[security] Redirect interception gap in BrowserSession. Filed as ISS-011. Out of T-007 scop"
+}
