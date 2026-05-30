@@ -49,7 +49,10 @@ def test_all_sample_brokers_load():
     assert "whitepages" in entries
     assert "spokeo" in entries
     assert "intelius" in entries
-    assert len(entries) == 3
+    assert "peoplefinders" in entries
+    assert "radaris" in entries
+    assert "mylife" in entries
+    assert len(entries) == 6
 
 
 def test_whitepages_fields():
@@ -59,6 +62,29 @@ def test_whitepages_fields():
     assert not wp.fcra_regulated
     assert wp.captcha_expected  # updated: Whitepages adapter handles CAPTCHA → manual_required
     assert wp.manual_fallback_required
+
+
+def test_peoplefinders_fields():
+    entries = load_registry(BROKERS_DIR)
+    pf = entries["peoplefinders"]
+    assert pf.adapter_type == AdapterType.manual_only
+    assert pf.captcha_expected
+    assert pf.manual_fallback_required
+    assert not pf.requires_email_confirm
+
+
+def test_radaris_requires_email_confirm():
+    entries = load_registry(BROKERS_DIR)
+    rad = entries["radaris"]
+    assert rad.requires_email_confirm
+    assert rad.manual_fallback_required
+
+
+def test_mylife_is_hard_manual_only():
+    entries = load_registry(BROKERS_DIR)
+    ml = entries["mylife"]
+    assert ml.difficulty.value == "hard"
+    assert ml.adapter_type == AdapterType.manual_only
 
 
 def test_intelius_captcha_manual_fallback():
@@ -123,7 +149,7 @@ def test_empty_status_language_raises(tmp_path):
 def test_cli_validate_registry_exits_zero():
     result = CliRunner().invoke(main, ["validate-registry"])
     assert result.exit_code == 0
-    assert "3 broker(s)" in result.output
+    assert "6 broker(s)" in result.output
 
 
 def test_cli_validate_registry_invalid_exits_nonzero(tmp_path):

@@ -1,0 +1,20 @@
+slug: radaris
+name: Radaris
+adapter_type: manual_only
+opt_out_url: https://radaris.com/control/privacy
+official_url: https://radaris.com
+difficulty: medium
+region: us
+rescan_days: 60
+status_language:
+  - submitted
+  - awaiting_confirmation
+  - manual_required
+  - profile_not_visible_as_of_date
+  - failed
+requires_dob: false
+requires_email_confirm: true
+captcha_expected: true
+fcra_regulated: false
+manual_fallback_required: true
+notes: "Requires email confirmation. CAPTCHA posture unverified — conservative manual_only until tested."
