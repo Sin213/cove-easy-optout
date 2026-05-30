@@ -29,6 +29,7 @@ Before opening a pull request, verify:
 
 - [ ] No real PII in code, tests, fixtures, or commit messages
 - [ ] No SSN fields added anywhere
+- [ ] DOB only used in guided-manual flows (never in automated adapters)
 - [ ] No CAPTCHA solving logic
 - [ ] No credit-bureau or FCRA broker scope expansion
 - [ ] Adapter returns `manual_required` on detection, not a bypass attempt
