@@ -1,12 +1,13 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nSupport brokers that require verification email through a controlled inbox path.\n\nScope:\n- plus-addressing job correlation design\n- IMAP polling fallback or webhook abstraction\n- message parsing boundaries\n- DKIM/SPF verification as design requirement or placeholder if not available in MVP\n\nAcceptance:\n- Email confirmation can be correlated to a job in tests.\n- Forged/unmatched messages cannot close jobs.\n- Personal inbox verification remains manual_required.",
   "id": "T-010",
   "order": 10,
   "phase": "p4",
-  "status": "open",
+  "status": "complete",
   "title": "Add controlled email verification foundation",
   "type": "task"
 }
