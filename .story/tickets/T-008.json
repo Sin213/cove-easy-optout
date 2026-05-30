@@ -1,12 +1,13 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nProduce auditable local reports without leaking full PII.\n\nScope:\n- run summary\n- broker statuses\n- timestamps\n- request method\n- next recommended action\n- no full profile echo\n\nAcceptance:\n- JSON report generated.\n- HTML report generated.\n- Uses honest status language.\n- Does not include unnecessary PII.",
   "id": "T-008",
   "order": 10,
   "phase": "p3",
-  "status": "open",
+  "status": "complete",
   "title": "Generate JSON/HTML user report",
   "type": "feature"
 }

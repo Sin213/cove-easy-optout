@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cove Opt-Out Report &mdash; {{ report.generated_at | e }}</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 2rem auto; color: #222; }
+    h1 { font-size: 1.4rem; }
+    .summary { background: #f5f5f5; border-radius: 4px; padding: 1rem; margin: 1rem 0; }
+    .summary span { margin-right: 1.5rem; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { text-align: left; padding: .5rem .75rem; border-bottom: 1px solid #ddd; }
+    th { background: #f0f0f0; }
+    .status-submitted { color: #2a7a2a; }
+    .status-manual-required { color: #b56a00; }
+    .status-failed { color: #b00000; }
+    .status-awaiting-confirmation { color: #005a9e; }
+    .status-not-visible { color: #555; }
+    .disclaimer { font-size: .85rem; color: #666; border-top: 1px solid #ddd; padding-top: .75rem; margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<h1>Cove Opt-Out Report</h1>
+<p>Generated: {{ report.generated_at | e }}</p>
+
+<div class="summary">
+  <span>Total: {{ report.total }}</span>
+  <span>Submitted: {{ report.submitted }}</span>
+  <span>Manual required: {{ report.manual_required }}</span>
+  <span>Failed: {{ report.failed }}</span>
+  <span>Awaiting confirmation: {{ report.awaiting_confirmation }}</span>
+  <span>Not visible: {{ report.profile_not_visible_as_of_date }}</span>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Broker</th>
+      <th>Status</th>
+      <th>Date</th>
+      <th>Next Action</th>
+      <th>Manual URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in report.rows %}
+    <tr>
+      <td>{{ row.broker_slug | e }}</td>
+      <td class="status-{{ row.status | e | replace('_', '-') }}">{{ row.status | e }}</td>
+      <td>{{ row.timestamp | e }}</td>
+      <td>{{ row.next_action | e }}</td>
+      <td>{% if row.manual_url and (row.manual_url.startswith('https://') or row.manual_url.startswith('http://')) %}<a href="{{ row.manual_url | e }}">{{ row.manual_url | e }}</a>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="disclaimer">
+  Results do not confirm removal. Verify directly with each broker.
+  Cove submits requests on your behalf; it cannot compel brokers to remove your data.
+</p>
+
+</body>
+</html>
