@@ -1,12 +1,13 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nCreate the repo-level documents that define what this project is and what it refuses to do.\n\nScope:\n- README.md\n- LICENSE decision note or LICENSE if chosen\n- DISCLAIMER.md\n- ACCEPTABLE_USE.md\n- SECURITY.md\n- CONTRIBUTING.md skeleton\n- docs/architecture.md skeleton\n\nAcceptance:\n- Clearly states local-first/self-hosted privacy model.\n- Clearly states not legal advice.\n- Clearly forbids SSN collection, third-party removals, CAPTCHA solving, and credit-bureau/FCRA automation.\n- Clearly states no removal guarantees.\n- Defines honest status language.\n- Does not include app implementation code.",
   "id": "T-001",
   "order": 10,
   "phase": "p0",
-  "status": "open",
+  "status": "complete",
   "title": "Initialize repo policy and project docs",
   "type": "chore"
 }

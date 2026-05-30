@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-008",
+  "impact": "LICENSE referenced but not present. Intentional — not yet finalized.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[clean-code] LICENSE referenced but not present. Intentional — not yet finalized."
+}

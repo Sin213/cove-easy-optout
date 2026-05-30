@@ -1,0 +1,16 @@
+{
+  "components": [
+    "autonomous"
+  ],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-007",
+  "impact": ".gitignore missing *.sqlite/*.db and .mypy_cache — anticipatory, no code yet.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "[clean-code] .gitignore missing *.sqlite/*.db and .mypy_cache — anticipatory, no code yet."
+}
