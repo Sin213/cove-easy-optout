@@ -2,13 +2,14 @@
   "blockedBy": [
     "T-001"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nCreate a small, testable Python foundation without overbuilding.\n\nScope:\n- pyproject.toml\n- package layout\n- CLI entrypoint\n- config loading\n- structured logging with PII redaction baseline\n- tests smoke setup\n\nAcceptance:\n- CLI runs.\n- Test suite runs.\n- No browser automation yet.\n- No database schema beyond minimal placeholder if needed.\n- Logging has obvious PII-redaction guardrails.",
   "id": "T-002",
   "order": 10,
   "phase": "p1",
-  "status": "open",
+  "status": "complete",
   "title": "Create minimal Python project scaffold",
   "type": "task"
 }
