@@ -2,13 +2,14 @@
   "blockedBy": [
     "T-002"
   ],
-  "completedDate": null,
+  "claimedBySession": "35c38d13-d152-41bf-8579-ab50ae4ea323",
+  "completedDate": "2026-05-30",
   "createdDate": "2026-05-30",
   "description": "Goal:\nCreate the adapter lifecycle without touching real broker sites.\n\nScope:\n- BrokerAdapter interface\n- mock adapter\n- job result types\n- statuses: queued, running, submitted, awaiting_confirmation, verified_removed, failed, manual_required\n\nAcceptance:\n- Mock adapter executes through the lifecycle.\n- Results are persisted.\n- manual_required is a first-class result.\n- No Playwright dependency required yet unless structurally useful.",
   "id": "T-005",
   "order": 20,
   "phase": "p2",
-  "status": "open",
+  "status": "complete",
   "title": "Define adapter interface and mock execution engine",
   "type": "task"
 }
