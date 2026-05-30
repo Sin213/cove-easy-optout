@@ -1,0 +1,14 @@
+{
+  "blockedBy": [
+    "T-006"
+  ],
+  "completedDate": null,
+  "createdDate": "2026-05-30",
+  "description": "Goal:\nReduce selector rot risk.\n\nScope:\n- recorded HTML fixtures\n- adapter lint\n- optional weekly canary design\n- broker_status.json generation\n\nAcceptance:\n- Adapter health can be checked without live PII.\n- Synthetic identities only.\n- broker_status.json does not overclaim coverage.",
+  "id": "T-014",
+  "order": 10,
+  "phase": "p6",
+  "status": "open",
+  "title": "Canary/fixture adapter health system",
+  "type": "task"
+}

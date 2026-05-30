@@ -1,0 +1,14 @@
+{
+  "blockedBy": [
+    "T-002"
+  ],
+  "completedDate": null,
+  "createdDate": "2026-05-30",
+  "description": "Goal:\nStore minimal user identity data encrypted at rest.\n\nScope:\n- profile model\n- local database\n- envelope encryption abstraction\n- KEK/DEK handling suitable for local MVP\n- create/read/update/delete profile commands or service functions\n\nAcceptance:\n- Profile can be saved and read back.\n- Stored sensitive fields are encrypted at rest.\n- No SSN field exists.\n- DOB field is optional and documented as guided-manual only.\n- No plaintext PII appears in logs or test output.",
+  "id": "T-003",
+  "order": 20,
+  "phase": "p1",
+  "status": "open",
+  "title": "Implement encrypted profile store foundation",
+  "type": "task"
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "storybloq": {
+      "type": "stdio",
+      "command": "storybloq",
+      "args": [
+        "--mcp"
+      ],
+      "env": {
+        "STORY_PROJECT_ROOT": "/home/sin/Projects/cove-easy-optout"
+      }
+    }
+  }
+}

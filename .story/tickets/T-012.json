@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-30",
+  "description": "Goal:\nTurn hard brokers into useful user-guided checklists instead of unsafe automation.\n\nScope:\n- manual_only adapter output\n- prefilled instructions\n- user action checklist\n- re-scan reminder\n\nCandidates:\n- PeopleConnect family\n- BeenVerified\n\nAcceptance:\n- Generates clear manual instructions.\n- Does not claim automation.\n- Does not collect SSN.\n- Personal inbox verification is handled by the user.",
+  "id": "T-012",
+  "order": 10,
+  "phase": "p5",
+  "status": "open",
+  "title": "Guided-manual flow generator",
+  "type": "feature"
+}

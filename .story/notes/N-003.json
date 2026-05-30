@@ -1,0 +1,9 @@
+{
+  "content": "Collect only what is required for opt-out workflows: name, current/prior addresses, phone, email. Never collect SSN. DOB is optional and only for guided-manual flows.",
+  "createdDate": "2026-05-30",
+  "id": "N-003",
+  "status": "active",
+  "tags": [],
+  "title": "Minimal PII model",
+  "updatedDate": "2026-05-30"
+}

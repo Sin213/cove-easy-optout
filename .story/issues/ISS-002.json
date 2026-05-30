@@ -1,0 +1,14 @@
+{
+  "components": [],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-002",
+  "impact": "BADBOOL/glamrock or any broker dataset must have LICENSE files verified before vendoring. Unlicensed GitHub content is all-rights-reserved by default. Do not copy proprietary broker workbook content.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "medium",
+  "status": "open",
+  "title": "Seed broker dataset licenses must be verified"
+}

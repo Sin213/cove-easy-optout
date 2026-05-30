@@ -1,0 +1,14 @@
+{
+  "components": [],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-001",
+  "impact": "Legal/compliance content is informational only. Before public release or hosted deployment, qualified counsel should review authorized-agent language, CCPA/CPRA handling, GDPR framing, DROP handling, ToS/CFAA posture, and acceptable-use language.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "high",
+  "status": "open",
+  "title": "Legal review required before public release"
+}

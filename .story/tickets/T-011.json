@@ -1,0 +1,14 @@
+{
+  "blockedBy": [
+    "T-007"
+  ],
+  "completedDate": null,
+  "createdDate": "2026-05-30",
+  "description": "Goal:\nPlan and add moderate-difficulty brokers only after T-007 is stable.\n\nCandidates:\n- Whitepages\n- PeopleFinders\n- Radaris\n- MyLife\n\nAcceptance:\n- Each broker has a separate scoped ticket before implementation.\n- CAPTCHA-heavy or hostile flows become manual_required.\n- No broad 'support all brokers' patch.",
+  "id": "T-011",
+  "order": 20,
+  "phase": "p4",
+  "status": "open",
+  "title": "Add Tier-2 broker expansion plan",
+  "type": "task"
+}

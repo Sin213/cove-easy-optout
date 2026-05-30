@@ -1,0 +1,9 @@
+{
+  "content": "Most adapters should be YAML config_form entries. Python scripted adapters are reserved for complex multi-step/AJAX/iframe flows. manual_only is preferred over risky automation.",
+  "createdDate": "2026-05-30",
+  "id": "N-004",
+  "status": "active",
+  "tags": [],
+  "title": "Adapter strategy",
+  "updatedDate": "2026-05-30"
+}

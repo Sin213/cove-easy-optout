@@ -1,0 +1,14 @@
+{
+  "components": [],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-004",
+  "impact": "Do not add CAPTCHA solving, login bypass, token/cookie handling, or access-control circumvention. Detection must return manual_required.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "high",
+  "status": "open",
+  "title": "CAPTCHA/access-control boundary must stay hard"
+}

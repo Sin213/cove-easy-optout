@@ -1,0 +1,14 @@
+{
+  "components": [],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-003",
+  "impact": "Hosted mode changes the trust/liability model and creates a PII honeypot. MVP must stay local-first. Any future hosted work needs separate privacy/security/legal planning.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "high",
+  "status": "open",
+  "title": "Hosted mode is out of MVP scope"
+}

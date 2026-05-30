@@ -1,0 +1,14 @@
+{
+  "components": [],
+  "discoveredDate": "2026-05-30",
+  "id": "ISS-005",
+  "impact": "The app must never support removing someone else's data. All flows require a data-subject declaration/authorization artifact.",
+  "location": [],
+  "phase": null,
+  "relatedTickets": [],
+  "resolution": null,
+  "resolvedDate": null,
+  "severity": "critical",
+  "status": "open",
+  "title": "No third-party removal mode"
+}

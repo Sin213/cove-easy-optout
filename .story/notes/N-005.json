@@ -1,0 +1,9 @@
+{
+  "content": "Start with T-001, then T-002, then T-003. Do not begin broker automation until the policy docs, project scaffold, and encrypted profile store exist.",
+  "createdDate": "2026-05-30",
+  "id": "N-005",
+  "status": "active",
+  "tags": [],
+  "title": "First implementation recommendation",
+  "updatedDate": "2026-05-30"
+}

@@ -1,0 +1,49 @@
+{
+  "blockers": [],
+  "date": "2026-05-30",
+  "phases": [
+    {
+      "description": "Repo policy, legal/safety boundaries, and non-code project definition.",
+      "id": "p0",
+      "label": "PHASE 0",
+      "name": "Project foundation and policy guardrails"
+    },
+    {
+      "description": "Local-first Python foundation, secure profile storage, and encrypted PII handling.",
+      "id": "p1",
+      "label": "PHASE 1",
+      "name": "Secure local MVP engine"
+    },
+    {
+      "description": "Broker registry, adapter interface, safe Playwright wrapper, and first strictly gated Tier-1 adapter.",
+      "id": "p2",
+      "label": "PHASE 2",
+      "name": "Adapter system and first broker"
+    },
+    {
+      "description": "Local JSON/HTML reports, honest status language, and recurring re-scan scheduling.",
+      "id": "p3",
+      "label": "PHASE 3",
+      "name": "Reporting and rescan loop"
+    },
+    {
+      "description": "Controlled inbox confirmation handling and planned expansion to moderate-difficulty brokers.",
+      "id": "p4",
+      "label": "PHASE 4",
+      "name": "Controlled email verification and Tier-2 expansion"
+    },
+    {
+      "description": "Safe manual-only flows for hard brokers and official-channel/DROP tracking support.",
+      "id": "p5",
+      "label": "PHASE 5",
+      "name": "Guided-manual flows and DROP helper"
+    },
+    {
+      "description": "Adapter fixtures, health checks, contributor workflow, and broker registry quality controls.",
+      "id": "p6",
+      "label": "PHASE 6",
+      "name": "Community contribution hardening"
+    }
+  ],
+  "title": "Cove Optout"
+}

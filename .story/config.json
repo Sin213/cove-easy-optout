@@ -1,0 +1,14 @@
+{
+  "features": {
+    "handovers": true,
+    "issues": true,
+    "reviews": true,
+    "roadmap": true,
+    "tickets": true
+  },
+  "language": "python",
+  "project": "Cove Optout",
+  "schemaVersion": 1,
+  "type": "pip",
+  "version": 2
+}
