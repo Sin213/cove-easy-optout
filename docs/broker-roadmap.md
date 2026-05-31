@@ -45,7 +45,7 @@ After the YAML is merged, create a separate scoped implementation ticket before 
 Brokers are implemented in order of lowest risk and highest value:
 
 1. **PeopleFinders** — medium difficulty, no email confirm required; next Tier-2 scripted candidate after flow verification
-2. **Radaris** — medium difficulty, requires T-010 email verification; scripted candidate after flow verification  
+2. **Radaris** — medium difficulty, requires T-010 email verification; scripted candidate after flow verification
 3. **Spokeo** — medium difficulty, in registry; requires T-010 email wiring before scripted automation
 4. **MyLife** — hard; current assessment is permanent `manual_only` due to aggressive bot-detection; no scripted target planned
 

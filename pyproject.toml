@@ -26,7 +26,11 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["cove"]
+packages = ["cove", "adapters"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"adapters/brokers" = "adapters/brokers"
+"adapters/tests/fixtures" = "adapters/tests/fixtures"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

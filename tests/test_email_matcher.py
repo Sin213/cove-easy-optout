@@ -1,6 +1,6 @@
 import pytest
 
-from cove.email.matcher import JobMatcher, _extract_domain, _extract_token, _normalize_domain
+from cove.email.matcher import JobMatcher, _extract_domain, _extract_token, _normalize_domain, _parse_bare_addr
 from cove.email.models import ConfirmationEmail, ConfirmationRequest
 
 _TOKEN = "abc12345"
@@ -122,3 +122,25 @@ def test_extract_domain():
 def test_normalize_domain():
     assert _normalize_domain("www.spokeo.com") == "spokeo.com"
     assert _normalize_domain("spokeo.com") == "spokeo.com"
+
+
+def test_extract_token_formatted_header():
+    """Handles 'Display Name <addr>' format in To header."""
+    assert _extract_token("Cove <cove+abc12345@cove.test>") == "abc12345"
+
+
+def test_extract_domain_formatted_header():
+    """Handles 'Display Name <addr>' format in From header."""
+    assert _extract_domain("Spokeo <noreply@spokeo.com>") == "spokeo.com"
+
+
+def test_match_formatted_headers():
+    """Full match flow with formatted To and From headers."""
+    matcher = JobMatcher(_PENDING)
+    email = _make_email(
+        to=f"Cove <cove+{_TOKEN}@cove.test>",
+        from_="Spokeo <noreply@spokeo.com>",
+        body="Click https://spokeo.com/confirm/abc",
+    )
+    result = matcher.match(email)
+    assert result.matched is True

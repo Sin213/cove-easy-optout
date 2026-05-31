@@ -62,9 +62,12 @@ class ProfileStore:
 
         self._path.parent.mkdir(parents=True, exist_ok=True)
         tmp = self._path.with_suffix(".tmp")
-        tmp.write_text(json.dumps(payload))
+        fd = os.open(str(tmp), os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        try:
+            os.write(fd, json.dumps(payload).encode())
+        finally:
+            os.close(fd)
         os.replace(tmp, self._path)
-        os.chmod(self._path, 0o600)
 
         _log.info("profile saved")
 

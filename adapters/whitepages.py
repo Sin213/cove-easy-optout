@@ -89,7 +89,7 @@ class WhitepagesAdapter(BrokerAdapter):
         session.check_for_captcha()  # check on confirmation page too
 
         # Use a narrow regex to avoid matching unrelated "Remove X" buttons in headers/nav
-        submit_btn = page.get_by_role("button", name=re.compile(r"^(submit|confirm)\s", re.I))
+        submit_btn = page.get_by_role("button", name=re.compile(r"^(submit|confirm)(\s|$)", re.I))
         if submit_btn.count() == 0:
             # Confirmation button not found — cannot verify submission; require manual check
             return OptOutResult(

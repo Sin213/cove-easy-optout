@@ -11,6 +11,8 @@ TODO: verify DKIM/SPF before production use.
 """
 from __future__ import annotations
 
+from email.utils import parseaddr
+
 from cove.email.extractor import extract_confirmation_link
 from cove.email.models import ConfirmationEmail, ConfirmationRequest, ConfirmationResult
 
@@ -62,17 +64,28 @@ class JobMatcher:
         )
 
 
+def _parse_bare_addr(raw: str) -> str:
+    """Extract the bare email address from a possibly formatted header value.
+
+    Handles 'Display Name <addr@host>' and plain 'addr@host' forms.
+    """
+    _, addr = parseaddr(raw)
+    return addr
+
+
 def _extract_token(address: str) -> str | None:
     """Extract job_token from cove plus-address: cove+TOKEN@domain.com -> TOKEN.
 
+    Handles formatted headers like 'Cove <cove+TOKEN@domain.com>'.
     Returns None if:
-    - No '@' or '+' in address
+    - No '@' or '+' in parsed address
     - Local part before '+' is not exactly 'cove' (wrong-prefix bypass guard)
     - Token is empty string (cove+@domain.com)
     """
-    if "@" not in address or "+" not in address:
+    addr = _parse_bare_addr(address)
+    if "@" not in addr or "+" not in addr:
         return None
-    local = address.split("@")[0]
+    local = addr.split("@")[0]
     parts = local.split("+", 1)
     if len(parts) != 2:
         return None
@@ -85,10 +98,14 @@ def _extract_token(address: str) -> str | None:
 
 
 def _extract_domain(address: str) -> str:
-    """Extract domain from email address, lowercase."""
-    if "@" not in address:
+    """Extract domain from email address, lowercase.
+
+    Handles formatted headers like 'Spokeo <noreply@spokeo.com>'.
+    """
+    addr = _parse_bare_addr(address)
+    if "@" not in addr:
         return ""
-    return address.split("@")[-1].lower().strip()
+    return addr.split("@")[-1].lower().strip()
 
 
 def _normalize_domain(domain: str) -> str:
