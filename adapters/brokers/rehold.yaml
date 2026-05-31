@@ -1,0 +1,19 @@
+slug: rehold
+name: Rehold
+adapter_type: manual_only
+opt_out_url: https://rehold.com/
+official_url: https://rehold.com
+difficulty: medium
+region: us
+rescan_days: 60
+status_language:
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: true
+fcra_regulated: false
+manual_fallback_required: true
+drop_registered: false
+notes: Property records. CAPTCHA required.

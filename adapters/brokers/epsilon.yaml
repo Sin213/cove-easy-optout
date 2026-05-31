@@ -1,0 +1,20 @@
+slug: epsilon
+name: Epsilon
+adapter_type: manual_only
+opt_out_url: https://legal.epsilon.com/dsr
+official_url: https://www.epsilon.com
+difficulty: easy
+region: us
+rescan_days: 60
+status_language:
+- submitted
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: Marketing data company. Data subject request form.

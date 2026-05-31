@@ -1,0 +1,20 @@
+slug: calltruth
+name: CallTruth
+adapter_type: manual_only
+opt_out_url: https://www.calltruth.com/removal
+official_url: https://www.calltruth.com
+difficulty: easy
+region: us
+rescan_days: 30
+status_language:
+- submitted
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: Reverse phone lookup removal.

@@ -1,0 +1,20 @@
+slug: checkpeople
+name: CheckPeople
+adapter_type: manual_only
+opt_out_url: https://www.checkpeople.com/opt-out
+official_url: https://www.checkpeople.com
+difficulty: medium
+region: us
+rescan_days: 45
+status_language:
+- submitted
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: Requires Right to Know request first. May need birthdate.

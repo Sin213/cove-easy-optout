@@ -7,8 +7,17 @@ class MockAdapter(BrokerAdapter):
     broker_slug = "mock"
     manual_url = "https://example.com/manual-optout"
 
-    def __init__(self, outcome: OptOutStatus = OptOutStatus.submitted) -> None:
+    def __init__(
+        self,
+        outcome: OptOutStatus = OptOutStatus.submitted,
+        slug: str = "mock",
+        manual_url_override: str = "",
+    ) -> None:
         self._outcome = outcome
+        if slug != "mock":
+            self.broker_slug = slug
+        if manual_url_override:
+            self.manual_url = manual_url_override
 
     def submit_optout(self, profile) -> OptOutResult:
         if self._outcome == OptOutStatus.manual_required:

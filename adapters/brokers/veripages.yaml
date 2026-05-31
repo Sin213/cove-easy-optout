@@ -1,0 +1,20 @@
+slug: veripages
+name: Veripages
+adapter_type: manual_only
+opt_out_url: https://veripages.com/inner/control-privacy
+official_url: https://veripages.com
+difficulty: hard
+region: us
+rescan_days: 45
+status_language:
+- awaiting_confirmation
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: true
+captcha_expected: true
+fcra_regulated: false
+manual_fallback_required: true
+drop_registered: false
+notes: CAPTCHA required during opt-out.

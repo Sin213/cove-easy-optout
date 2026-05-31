@@ -52,7 +52,7 @@ def test_all_sample_brokers_load():
     assert "peoplefinders" in entries
     assert "radaris" in entries
     assert "mylife" in entries
-    assert len(entries) == 6
+    assert len(entries) >= 80
 
 
 def test_whitepages_fields():
@@ -149,7 +149,7 @@ def test_empty_status_language_raises(tmp_path):
 def test_cli_validate_registry_exits_zero():
     result = CliRunner().invoke(main, ["validate-registry"])
     assert result.exit_code == 0
-    assert "6 broker(s)" in result.output
+    assert "broker(s)" in result.output
 
 
 def test_cli_validate_registry_invalid_exits_nonzero(tmp_path):

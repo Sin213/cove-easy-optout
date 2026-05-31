@@ -1,0 +1,21 @@
+slug: nationalpublicdata
+name: NationalPublicData
+adapter_type: manual_only
+opt_out_url: https://nationalpublicdata.com/optout.html
+official_url: https://nationalpublicdata.com
+difficulty: medium
+region: us
+rescan_days: 45
+status_language:
+- submitted
+- awaiting_confirmation
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: true
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: Copy unique URL from search results. Major 2024 breach.

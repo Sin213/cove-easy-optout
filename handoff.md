@@ -1,54 +1,36 @@
-# Handoff — Cove Easy Opt-Out Full MVP Implementation
+# Handoff — CLI Wiring + Broker Registry Expansion
 
-## What changed
+## What changed (since last Codex review at 1c07aea)
 
-Complete project implementation from empty repo to working MVP: 15 tickets, 18 commits, 203 tests.
+### CLI commands wired to real modules (d91a5de)
+- `cove init` — prompts for profile fields, encrypts via ProfileStore, validates passphrase match
+- `cove run` — loads config + profile, loads registry, runs MockAdapter for scripted brokers, ManualFlowGenerator for manual_only, saves results via ResultStore, updates ScheduleStore. Supports `--due-only`.
+- `cove report` — loads latest run from ResultStore, builds RunReport, writes JSON + HTML via ReportWriter. Supports `--format json|html|both`.
+- MockAdapter updated to accept slug/manual_url overrides for per-broker identity.
+- 9 CLI tests: init, passphrase mismatch, run-without-profile, full init→run→report E2E, report-without-run, json-only format.
 
-## Key modules
+### Broker registry expanded from 6 to 80 (7db9a87, 17ee565)
+- 74 new YAML entries across 6 categories: people search (51), phone/caller ID (9), property records (5), business data (6), data aggregators (7), face search (2)
+- Sources: big-ass-data-broker-opt-out-list, CrabClear, DeleteMe, PI Solutions
+- All `manual_only` with conservative defaults per registry posture rules
+- All pass `cove validate-registry` schema validation
+- No FCRA-regulated brokers included
 
-- `cove/cli.py` — Click CLI: init, run, report, validate-registry, validate-health
-- `cove/config.py` — AppConfig + TOML loader with ConfigError wrapping
-- `cove/logging_config.py` — PiiRedactionFilter (email + subdomain-safe regex, phone regex)
-- `cove/profile/` — Profile/Address dataclasses, AES-GCM envelope encryption (PBKDF2 KEK, random DEK, 12-byte IVs, 0o600 perms)
-- `cove/adapter.py` — BrokerAdapter ABC, OptOutStatus/RunStatus split, OptOutResult
-- `cove/engine.py` — run_optout() with exception→failed (type name only, not message)
-- `cove/results.py` — ResultStore with microsecond-precision filenames
-- `cove/browser/` — BrowserSession (URL scheme + host allowlist), CaptchaDetectedError, PII-free screenshots
-- `cove/report.py` — RunReport + ReportWriter (JSON + HTML with autoescape, javascript: URI guard)
-- `cove/scheduler.py` — ScheduleStore, due_brokers(), half-interval priority for active opt-outs
-- `cove/email/` — JobMatcher (3 invariants: token, 1-level subdomain domain match, pending registry), MockInbox
-- `cove/manual_guide.py` — ManualFlowGenerator (first-name + city/state only, whitespace guard)
-- `cove/drop_helper.py` — DROP summary + routing (portal URL, not broker form)
-- `cove/health.py` — AdapterHealthChecker (text/id/class/name_attr, no false-positive class substring)
-- `adapters/_schema/broker.py` — BrokerEntry Pydantic v2 model with FCRA, CAPTCHA, slug, status, URL validators
-- `adapters/registry.py` — yaml.safe_load only, slug==filename enforcement
-- `adapters/whitepages.py` — WhitepagesAdapter with 3-point CAPTCHA check, ARIA locators
-- `adapters/brokers/` — 6 YAML entries (whitepages, spokeo, intelius, peoplefinders, radaris, mylife)
+### README rewritten (cbeaa38, d6144b8)
+- Added comprehensive privacy section explaining encryption, no-network, no-SSN, log redaction
+- Updated broker table organized by category (80 brokers)
+- Quick start and command documentation updated
 
-## Safety invariants
-
-- No SSN field on Profile (tested)
-- No CAPTCHA bypass — detection → manual_required (3 check points in adapters)
-- No FCRA broker automation — model_validator blocks scripted+fcra_regulated
-- captcha_expected → manual_fallback_required (model_validator)
-- No PII in logs (PiiRedactionFilter + caplog tests), reports (message omitted from HTML), screenshots (timestamp filenames)
-- Honest status language (5 approved values, never "removed"/"deleted")
-- AES-GCM tamper detection (ciphertext + DEK corruption tests)
-- File permissions 0o600 on encrypted profile
-- Email domain matching: exact or 1-level subdomain only (not arbitrary depth)
-- DROP disclaimer explicitly says "does NOT submit on your behalf"
-- javascript: URIs blocked in HTML report links
-
-## Open issues
-
-- ISS-011: BrowserSession redirect interception — must fix before live automation
-- ISS-012: Link clicks bypass URL allowlist — must fix before live automation
-- DKIM/SPF: TODO in email matcher — required before production email confirmation
+## Safety invariants preserved
+- No SSN field anywhere
+- No CAPTCHA bypass
+- No FCRA brokers
+- All new brokers default manual_only + captcha_expected appropriate to their flow
+- MockAdapter for scripted path (real browser gated on ISS-011/012)
+- No PII in logs, results, or reports
 
 ## Verification
-
 ```
-.venv/bin/pytest -q          # 203 passed
-cove validate-registry       # 6 brokers loaded
-cove validate-health         # 1 healthy, 0 degraded, 5 no fixture
+.venv/bin/pytest -q           # 210 passed
+cove validate-registry        # 80 brokers loaded
 ```

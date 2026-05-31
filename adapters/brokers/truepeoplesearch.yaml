@@ -1,0 +1,19 @@
+slug: truepeoplesearch
+name: TruePeopleSearch
+adapter_type: manual_only
+opt_out_url: https://www.truepeoplesearch.com/removal
+official_url: https://www.truepeoplesearch.com
+difficulty: hard
+region: us
+rescan_days: 30
+status_language:
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: true
+fcra_regulated: false
+manual_fallback_required: true
+drop_registered: false
+notes: Multiple CAPTCHAs during removal flow.

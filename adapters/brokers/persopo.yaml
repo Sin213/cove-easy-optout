@@ -1,0 +1,20 @@
+slug: persopo
+name: Persopo
+adapter_type: manual_only
+opt_out_url: https://persopo.com/privacy
+official_url: https://persopo.com
+difficulty: easy
+region: us
+rescan_days: 30
+status_language:
+- submitted
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: Privacy/opt-out page.

@@ -1,0 +1,20 @@
+slug: spyfly
+name: SpyFly
+adapter_type: manual_only
+opt_out_url: https://www.spyfly.com/help-center/remove-my-public-record
+official_url: https://www.spyfly.com
+difficulty: easy
+region: us
+rescan_days: 45
+status_language:
+- submitted
+- manual_required
+- profile_not_visible_as_of_date
+- failed
+requires_dob: false
+requires_email_confirm: false
+captcha_expected: false
+fcra_regulated: false
+manual_fallback_required: false
+drop_registered: false
+notes: 'Email: support@spyfly.com. Verify data first.'
