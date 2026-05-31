@@ -197,4 +197,4 @@ Cove never says "removed" or "deleted" because it can't verify that. These are t
 
 ## License
 
-Not yet finalized. Intended: MIT or Apache-2.0.
+[MIT](LICENSE)
