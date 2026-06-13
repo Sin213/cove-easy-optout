@@ -2,8 +2,17 @@ import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from .portable import is_portable, portable_data_dir
 
-_DEFAULT_CONFIG_PATH = Path.home() / ".config" / "cove" / "config.toml"
+
+def _portable_dir() -> Path:
+    return Path(portable_data_dir("cove-easy-optout"))
+
+
+if is_portable():
+    _DEFAULT_CONFIG_PATH = _portable_dir() / "config.toml"
+else:
+    _DEFAULT_CONFIG_PATH = Path.home() / ".config" / "cove" / "config.toml"
 
 
 class ConfigError(Exception):
@@ -13,10 +22,10 @@ class ConfigError(Exception):
 @dataclass
 class AppConfig:
     profile_path: Path = field(
-        default_factory=lambda: Path.home() / ".config" / "cove" / "profile.enc"
+        default_factory=lambda: _portable_dir() / "profile.enc" if is_portable() else Path.home() / ".config" / "cove" / "profile.enc"
     )
     output_dir: Path = field(
-        default_factory=lambda: Path.home() / ".local" / "share" / "cove" / "reports"
+        default_factory=lambda: _portable_dir() / "reports" if is_portable() else Path.home() / ".local" / "share" / "cove" / "reports"
     )
     log_level: str = "INFO"
 
