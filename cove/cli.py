@@ -18,6 +18,15 @@ def main() -> None:
     """Cove Easy Opt-Out — local-first data-broker opt-out automation."""
 
 
+@main.result_callback()
+def _after_command(result, **kwargs) -> None:
+    # One-line stderr hint when a newer release exists; silent on any
+    # failure so it can never break or noticeably slow a command.
+    from cove.updater import maybe_notify_update
+    maybe_notify_update(_version())
+    return result
+
+
 @main.command()
 @click.option("--config", "config_path", default=None, type=click.Path(path_type=Path))
 def init(config_path: Path | None) -> None:
