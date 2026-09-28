@@ -1,7 +1,18 @@
+from __future__ import annotations
+
 import importlib.metadata
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import click
+
+if TYPE_CHECKING:
+    from cove.config import AppConfig
+
+# Short passphrases make the PBKDF2-protected profile practical to brute-force
+# offline, which would undercut the at-rest encryption the README promises.
+MIN_PASSPHRASE_LEN = 8
+_CONFIG_META_KEY = "cove.config"
 
 
 def _version() -> str:
@@ -22,22 +33,37 @@ def main() -> None:
 def _after_command(result, **kwargs) -> None:
     # One-line stderr hint when a newer release exists; silent on any
     # failure so it can never break or noticeably slow a command.
+    cfg = click.get_current_context().meta.get(_CONFIG_META_KEY)
+    if cfg is not None and not cfg.update_check:
+        return result
     from cove.updater import maybe_notify_update
     maybe_notify_update(_version())
     return result
+
+
+def _setup(config_path: Path | None) -> AppConfig:
+    """Load config and configure logging; exit cleanly on a malformed config."""
+    from cove.config import ConfigError, load_config
+    from cove.logging_config import configure_logging
+
+    try:
+        cfg = load_config(config_path)
+    except ConfigError as exc:
+        click.echo(str(exc), err=True)
+        raise SystemExit(1)
+    configure_logging(cfg.log_level)
+    click.get_current_context().meta[_CONFIG_META_KEY] = cfg
+    return cfg
 
 
 @main.command()
 @click.option("--config", "config_path", default=None, type=click.Path(path_type=Path))
 def init(config_path: Path | None) -> None:
     """Create or update your encrypted local profile."""
-    from cove.config import load_config
-    from cove.logging_config import configure_logging
     from cove.profile.models import Address, Profile
     from cove.profile.store import ProfileStore
 
-    cfg = load_config(config_path)
-    configure_logging(cfg.log_level)
+    cfg = _setup(config_path)
     store = ProfileStore(cfg.profile_path)
 
     if store.exists():
@@ -61,6 +87,11 @@ def init(config_path: Path | None) -> None:
     if passphrase != passphrase_confirm:
         click.echo("Passphrases do not match.", err=True)
         raise SystemExit(1)
+    if len(passphrase) < MIN_PASSPHRASE_LEN:
+        click.echo(
+            f"Passphrase must be at least {MIN_PASSPHRASE_LEN} characters.", err=True
+        )
+        raise SystemExit(1)
 
     profile = Profile(
         names=[name],
@@ -80,32 +111,34 @@ def run(config_path: Path | None, due_only: bool) -> None:
     from adapters.mock import MockAdapter
     from adapters.registry import load_registry
     from cove.adapter import OptOutStatus
-    from cove.browser import allowed_hosts_from_registry
-    from cove.config import load_config
     from cove.engine import run_optout
-    from cove.logging_config import configure_logging
     from cove.manual_guide import ManualFlowGenerator
     from cove.profile.crypto import DecryptionError
-    from cove.profile.store import ProfileNotFoundError, ProfileStore
+    from cove.profile.store import ProfileCorruptError, ProfileNotFoundError, ProfileStore
     from cove.results import ResultStore
-    from cove.scheduler import ScheduleStore, due_brokers
+    from cove.scheduler import DEFAULT_RESCAN_DAYS, ScheduleStore, due_brokers
 
-    cfg = load_config(config_path)
-    configure_logging(cfg.log_level)
+    cfg = _setup(config_path)
 
     store = ProfileStore(cfg.profile_path)
+    no_profile_msg = "No profile found. Run 'cove init' first."
+    if not store.exists():
+        click.echo(no_profile_msg, err=True)
+        raise SystemExit(1)
     try:
         passphrase = click.prompt("Passphrase", hide_input=True)
         profile = store.load(passphrase)
     except ProfileNotFoundError:
-        click.echo("No profile found. Run 'cove init' first.", err=True)
+        click.echo(no_profile_msg, err=True)
+        raise SystemExit(1)
+    except ProfileCorruptError as exc:
+        click.echo(f"{exc}. Re-create it with 'cove init'.", err=True)
         raise SystemExit(1)
     except DecryptionError:
         click.echo("Wrong passphrase.", err=True)
         raise SystemExit(1)
 
     registry = load_registry()
-    allowed_hosts = allowed_hosts_from_registry(registry)
     schedule_path = cfg.output_dir / "schedule.json"
     schedule = ScheduleStore(schedule_path)
 
@@ -142,10 +175,10 @@ def run(config_path: Path | None, due_only: bool) -> None:
     result_store = ResultStore(cfg.output_dir)
     run_path = result_store.save(results)
 
-    for r in results:
-        entry = registry.get(r.broker_slug, None)
-        rescan_days = entry.rescan_days if entry else 30
-        schedule.record_run(r.broker_slug, r.status.value, rescan_days)
+    schedule.record_runs([
+        (r.broker_slug, r.status.value, getattr(registry.get(r.broker_slug), "rescan_days", DEFAULT_RESCAN_DAYS))
+        for r in results
+    ])
 
     click.echo(f"\nRun complete: {len(results)} broker(s)")
     for r in results:
@@ -166,13 +199,10 @@ def run(config_path: Path | None, due_only: bool) -> None:
 @click.option("--format", "fmt", type=click.Choice(["json", "html", "both"]), default="both")
 def report(config_path: Path | None, fmt: str) -> None:
     """Generate a local opt-out status report from the latest run."""
-    from cove.config import load_config
-    from cove.logging_config import configure_logging
     from cove.report import ReportWriter, build_report
     from cove.results import ResultStore
 
-    cfg = load_config(config_path)
-    configure_logging(cfg.log_level)
+    cfg = _setup(config_path)
 
     result_store = ResultStore(cfg.output_dir)
     try:

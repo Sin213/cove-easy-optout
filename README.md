@@ -23,9 +23,20 @@ When you run `cove init`, your information is encrypted using AES-256-GCM before
 - File permissions: `0600` (owner-read/write only, set atomically)
 - Fresh random keys on every save — no key reuse
 
-### No telemetry, no analytics, no network calls
+### No telemetry, no analytics — one optional network call
 
-Cove makes zero network requests during normal operation. The `cove run` command currently uses mock adapters that simulate submissions locally. When real browser automation is added in the future, it will only connect to the specific broker opt-out pages listed in the registry — never to any Cove server, analytics endpoint, or third party.
+Cove sends none of your data anywhere. The `cove run` command currently uses mock adapters that simulate submissions locally. When real browser automation is added in the future, it will only connect to the specific broker opt-out pages listed in the registry — never to any Cove server, analytics endpoint, or third party.
+
+The one network request Cove makes is an **update check**: after a command succeeds, it fetches the latest public release info from `api.github.com` and prints a one-line notice if a newer version exists. The request carries no profile data or identifiers (GitHub sees your IP address, as with any HTTPS request). Turn it off with either:
+
+```bash
+export COVE_NO_UPDATE_CHECK=1          # environment variable
+```
+
+```toml
+# ~/.config/cove/config.toml
+update_check = false
+```
 
 ### No SSN, ever
 
@@ -41,7 +52,7 @@ The entire codebase is open. Specific things to check:
 
 - **No SSN field**: `cove/profile/models.py` — the `Profile` dataclass has `names`, `emails`, `phones`, `addresses`. No SSN.
 - **Encryption**: `cove/profile/crypto.py` — AES-GCM envelope encryption with PBKDF2 key derivation
-- **No network calls**: `grep -r "requests\|urllib\|httpx\|aiohttp" cove/` — nothing
+- **Network calls**: `grep -r "requests\|urllib\|httpx\|aiohttp" cove/` — only `cove/updater.py` (the release check above)
 - **Log redaction**: `cove/logging_config.py` — `PiiRedactionFilter` scrubs emails and phones
 - **Test proof**: `tests/test_profile_store.py` — tests assert the encrypted file contains no plaintext PII
 
@@ -50,7 +61,7 @@ The entire codebase is open. Specific things to check:
 | File | Contents | Encrypted? |
 |------|----------|-----------|
 | `~/.config/cove/profile.enc` | Your name, email, phone, address | Yes (AES-256-GCM) |
-| `~/.config/cove/config.toml` | Settings (paths, log level) | No (no PII) |
+| `~/.config/cove/config.toml` | Settings (paths, log level, update check) | No (no PII) |
 | `~/.local/share/cove/reports/*.json` | Broker slugs + status per run | No (no PII — only broker names and timestamps) |
 | `~/.local/share/cove/reports/*.html` | Human-readable status report | No (no PII) |
 | `~/.local/share/cove/schedule.json` | When each broker was last checked | No (no PII — only slugs and dates) |
@@ -140,7 +151,7 @@ PimEyes, FaceCheck
 
 ---
 
-Run `cove validate-registry` to see the full list with opt-out URLs and details.
+Each broker's opt-out URL and details live in `adapters/brokers/<slug>.yaml`. Run `cove validate-registry` to check that every entry loads.
 
 ## Options
 
@@ -161,6 +172,19 @@ Run `cove validate-registry` to see the full list with opt-out URLs and details.
 .venv/bin/cove validate-health
 ```
 
+### Config file
+
+All keys are optional; `~` is expanded in paths.
+
+```toml
+profile_path = "~/.config/cove/profile.enc"
+output_dir   = "~/.local/share/cove/reports"
+log_level    = "INFO"
+update_check = true   # set false to disable the GitHub release check
+```
+
+Passphrases must be at least 8 characters.
+
 ## What It Does NOT Do
 
 These are hard limits, not missing features:
@@ -171,7 +195,7 @@ These are hard limits, not missing features:
 - **No credit-bureau or FCRA-regulated brokers** — Equifax, Experian, TransUnion are permanently excluded
 - **No removal guarantees** — Cove submits your request; it cannot force a broker to comply
 - **No dark-web or breach monitoring**
-- **No telemetry** — nothing is sent anywhere outside your machine
+- **No telemetry** — none of your data leaves your machine (the optional update check only reads public release info)
 
 ## Honest Status Language
 

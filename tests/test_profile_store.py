@@ -7,7 +7,7 @@ import pytest
 
 from cove.profile.crypto import DecryptionError
 from cove.profile.models import Address, Profile
-from cove.profile.store import ProfileNotFoundError, ProfileStore
+from cove.profile.store import ProfileCorruptError, ProfileNotFoundError, ProfileStore
 
 _PASS = "test-passphrase-abc"
 
@@ -102,3 +102,17 @@ def test_load_missing_raises(tmp_path):
     store = ProfileStore(tmp_path / "profile.enc")
     with pytest.raises(ProfileNotFoundError):
         store.load(_PASS)
+
+
+@pytest.mark.parametrize("content", ["", "not json", "[]", '{"salt": "zz"}', '{"version": 1}'])
+def test_load_corrupt_file_raises_corrupt_error(tmp_path, content):
+    path = tmp_path / "profile.enc"
+    path.write_text(content)
+    with pytest.raises(ProfileCorruptError):
+        ProfileStore(path).load(_PASS)
+
+
+def test_save_leaves_no_temp_file(tmp_path):
+    path = tmp_path / "profile.enc"
+    ProfileStore(path).save(_PROFILE, _PASS)
+    assert [p.name for p in tmp_path.iterdir()] == ["profile.enc"]

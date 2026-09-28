@@ -53,10 +53,14 @@ class ScheduleStore:
         return {slug: ScanRecord(**rec) for slug, rec in data.items()}
 
     def save(self, records: dict[str, ScanRecord]) -> None:
+        # Write-then-rename so an interrupted run never leaves a truncated file
+        # that would break every later `cove run --due-only`.
         self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._path.write_text(
+        tmp = self._path.with_suffix(".tmp")
+        tmp.write_text(
             json.dumps({slug: asdict(rec) for slug, rec in records.items()}, indent=2)
         )
+        tmp.replace(self._path)
 
     def record_run(
         self,
@@ -65,23 +69,30 @@ class ScheduleStore:
         rescan_days: int = DEFAULT_RESCAN_DAYS,
     ) -> ScanRecord:
         """Record a completed run and compute next_due_at. Overwrites existing record."""
+        return self.record_runs([(broker_slug, status, rescan_days)])[0]
+
+    def record_runs(self, runs: list[tuple[str, str, int]]) -> list[ScanRecord]:
+        """Record many (slug, status, rescan_days) runs with a single load/save."""
         records = self.load()
         now = datetime.now(UTC)
-        interval_days = (
-            rescan_days * ACTIVE_RESCAN_MULTIPLIER
-            if status in _ACTIVE_STATUSES
-            else float(rescan_days)
-        )
-        next_due = now + timedelta(days=interval_days)
-        record = ScanRecord(
-            broker_slug=broker_slug,
-            last_run_at=now.strftime("%Y-%m-%dT%H:%M:%S") + "Z",
-            last_status=status,
-            next_due_at=next_due.strftime("%Y-%m-%dT%H:%M:%S") + "Z",
-        )
-        records[broker_slug] = record
+        recorded = []
+        for broker_slug, status, rescan_days in runs:
+            interval_days = (
+                rescan_days * ACTIVE_RESCAN_MULTIPLIER
+                if status in _ACTIVE_STATUSES
+                else float(rescan_days)
+            )
+            next_due = now + timedelta(days=interval_days)
+            record = ScanRecord(
+                broker_slug=broker_slug,
+                last_run_at=now.strftime("%Y-%m-%dT%H:%M:%S") + "Z",
+                last_status=status,
+                next_due_at=next_due.strftime("%Y-%m-%dT%H:%M:%S") + "Z",
+            )
+            records[broker_slug] = record
+            recorded.append(record)
         self.save(records)
-        return record
+        return recorded
 
 
 def due_brokers(

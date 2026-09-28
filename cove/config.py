@@ -28,6 +28,9 @@ class AppConfig:
         default_factory=lambda: _portable_dir() / "reports" if is_portable() else Path.home() / ".local" / "share" / "cove" / "reports"
     )
     log_level: str = "INFO"
+    # Checks GitHub for a newer release after each command. The only network
+    # request Cove makes; set to false (or COVE_NO_UPDATE_CHECK=1) to disable.
+    update_check: bool = True
 
 
 def load_config(path: Path | None = None) -> AppConfig:
@@ -43,8 +46,12 @@ def load_config(path: Path | None = None) -> AppConfig:
         raise ConfigError(f"Failed to parse config at {config_path}: {exc}") from exc
 
     defaults = AppConfig()
+    update_check = data.get("update_check", defaults.update_check)
+    if not isinstance(update_check, bool):
+        raise ConfigError(f"update_check in {config_path} must be true or false")
     return AppConfig(
-        profile_path=Path(data.get("profile_path", defaults.profile_path)),
-        output_dir=Path(data.get("output_dir", defaults.output_dir)),
+        profile_path=Path(data.get("profile_path", defaults.profile_path)).expanduser(),
+        output_dir=Path(data.get("output_dir", defaults.output_dir)).expanduser(),
         log_level=str(data.get("log_level", defaults.log_level)),
+        update_check=update_check,
     )

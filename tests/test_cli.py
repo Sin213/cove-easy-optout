@@ -139,3 +139,76 @@ def test_report_json_only(tmp_path):
     assert result.exit_code == 0
     assert "JSON report" in result.output
     assert "HTML report" not in result.output
+
+
+def _write_config(tmp_path, extra=""):
+    config = tmp_path / "config.toml"
+    config.write_text(
+        f'profile_path = "{tmp_path / "profile.enc"}"\n'
+        f'output_dir = "{tmp_path / "reports"}"\n' + extra
+    )
+    return config
+
+
+def test_init_rejects_short_passphrase(tmp_path):
+    config = _write_config(tmp_path)
+    result = CliRunner().invoke(main, ["init", "--config", str(config)], input=(
+        "Test User\ntest@example.com\n\n123 Main St\nSpringfield\nIL\n62701\n"
+        "short\nshort\n"
+    ))
+    assert result.exit_code == 1
+    assert "at least 8 characters" in result.output
+    assert not (tmp_path / "profile.enc").exists()
+
+
+def test_run_without_profile_does_not_prompt_for_passphrase(tmp_path):
+    config = _write_config(tmp_path)
+    result = CliRunner().invoke(main, ["run", "--config", str(config)])
+    assert result.exit_code == 1
+    assert "No profile found" in result.output
+    assert "Passphrase" not in result.output
+
+
+def test_run_with_corrupt_profile_exits_cleanly(tmp_path):
+    config = _write_config(tmp_path)
+    (tmp_path / "profile.enc").write_text("garbage")
+    result = CliRunner().invoke(main, ["run", "--config", str(config)], input="testpass\n")
+    assert result.exit_code == 1
+    assert "corrupt" in result.output
+    assert result.exception is None or isinstance(result.exception, SystemExit)
+
+
+def test_malformed_config_exits_cleanly(tmp_path):
+    config = tmp_path / "config.toml"
+    config.write_text("this is = = not toml")
+    result = CliRunner().invoke(main, ["report", "--config", str(config)])
+    assert result.exit_code == 1
+    assert "Failed to parse config" in result.output
+
+
+_INIT_INPUT = (
+    "Test User\ntest@example.com\n\n123 Main St\nSpringfield\nIL\n62701\n"
+    "testpass\ntestpass\n"
+)
+
+
+def test_update_check_runs_when_enabled(tmp_path, monkeypatch):
+    import cove.updater
+
+    calls = []
+    monkeypatch.setattr(cove.updater, "maybe_notify_update", lambda v: calls.append(v))
+    config = _write_config(tmp_path)
+    result = CliRunner().invoke(main, ["init", "--config", str(config)], input=_INIT_INPUT)
+    assert result.exit_code == 0
+    assert len(calls) == 1
+
+
+def test_update_check_skipped_when_disabled_in_config(tmp_path, monkeypatch):
+    import cove.updater
+
+    calls = []
+    monkeypatch.setattr(cove.updater, "maybe_notify_update", lambda v: calls.append(v))
+    config = _write_config(tmp_path, "update_check = false\n")
+    result = CliRunner().invoke(main, ["init", "--config", str(config)], input=_INIT_INPUT)
+    assert result.exit_code == 0
+    assert calls == []

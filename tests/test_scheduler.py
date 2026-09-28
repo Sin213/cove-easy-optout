@@ -126,3 +126,20 @@ def test_due_brokers_registry_scoped(tmp_path):
     result = due_brokers(records, ["whitepages"], as_of=_NOW)
     assert "not-in-registry" not in result
     assert "whitepages" in result
+
+
+def test_record_runs_batches_into_one_file(tmp_path):
+    store = _store(tmp_path)
+    recorded = store.record_runs([("alpha", "submitted", 30), ("beta", "failed", 10)])
+    assert [r.broker_slug for r in recorded] == ["alpha", "beta"]
+    records = store.load()
+    assert set(records) == {"alpha", "beta"}
+    assert records["beta"].last_status == "failed"
+    assert not (tmp_path / "schedule.tmp").exists()
+
+
+def test_record_runs_preserves_existing_records(tmp_path):
+    store = _store(tmp_path)
+    store.record_run("alpha", "submitted")
+    store.record_runs([("beta", "failed", 30)])
+    assert set(store.load()) == {"alpha", "beta"}
