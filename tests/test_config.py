@@ -37,3 +37,26 @@ def test_load_config_raises_config_error_on_bad_toml(tmp_path):
     # Must wrap, not re-raise the raw tomllib exception
     assert isinstance(exc_info.value, ConfigError)
     assert not isinstance(exc_info.value, tomllib.TOMLDecodeError)
+
+
+def test_load_config_expands_tilde(tmp_path, monkeypatch):
+    monkeypatch.setenv("HOME", str(tmp_path))
+    toml_file = tmp_path / "config.toml"
+    toml_file.write_text('profile_path = "~/p.enc"\noutput_dir = "~/reports"\n')
+    config = load_config(toml_file)
+    assert config.profile_path == tmp_path / "p.enc"
+    assert config.output_dir == tmp_path / "reports"
+
+
+def test_update_check_defaults_on_and_can_be_disabled(tmp_path):
+    assert load_config(tmp_path / "absent.toml").update_check is True
+    toml_file = tmp_path / "config.toml"
+    toml_file.write_text("update_check = false\n")
+    assert load_config(toml_file).update_check is False
+
+
+def test_update_check_rejects_non_bool(tmp_path):
+    toml_file = tmp_path / "config.toml"
+    toml_file.write_text('update_check = "no"\n')
+    with pytest.raises(ConfigError):
+        load_config(toml_file)

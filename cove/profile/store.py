@@ -33,6 +33,10 @@ class ProfileNotFoundError(Exception):
     """Raised when the profile file does not exist."""
 
 
+class ProfileCorruptError(Exception):
+    """Raised when the profile file is unreadable (truncated, edited, or not a Cove profile)."""
+
+
 class ProfileStore:
     def __init__(self, path: Path) -> None:
         self._path = path
@@ -63,10 +67,12 @@ class ProfileStore:
         self._path.parent.mkdir(parents=True, exist_ok=True)
         tmp = self._path.with_suffix(".tmp")
         fd = os.open(str(tmp), os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
-        try:
-            os.write(fd, json.dumps(payload).encode())
-        finally:
-            os.close(fd)
+        # fdopen takes ownership of fd; write() loops until all bytes land,
+        # unlike a bare os.write() which may write only part of the buffer.
+        with os.fdopen(fd, "wb") as f:
+            f.write(json.dumps(payload).encode())
+            f.flush()
+            os.fsync(f.fileno())
         os.replace(tmp, self._path)
 
         _log.info("profile saved")
@@ -76,13 +82,15 @@ class ProfileStore:
         if not self._path.exists():
             raise ProfileNotFoundError(f"No profile at {self._path}")
 
-        payload = json.loads(self._path.read_text())
-
-        salt = bytes.fromhex(payload["salt"])
-        kek_iv = bytes.fromhex(payload["kek_iv"])
-        encrypted_dek = bytes.fromhex(payload["encrypted_dek"])
-        data_iv = bytes.fromhex(payload["data_iv"])
-        ciphertext = bytes.fromhex(payload["ciphertext"])
+        try:
+            payload = json.loads(self._path.read_text())
+            salt = bytes.fromhex(payload["salt"])
+            kek_iv = bytes.fromhex(payload["kek_iv"])
+            encrypted_dek = bytes.fromhex(payload["encrypted_dek"])
+            data_iv = bytes.fromhex(payload["data_iv"])
+            ciphertext = bytes.fromhex(payload["ciphertext"])
+        except (UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+            raise ProfileCorruptError(f"Profile at {self._path} is corrupt or unreadable") from exc
 
         kek = derive_kek(passphrase, salt)
         dek = decrypt_with_kek(kek, kek_iv, encrypted_dek)

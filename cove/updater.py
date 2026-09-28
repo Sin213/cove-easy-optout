@@ -5,6 +5,11 @@ release exists, a one-line notice with the release URL is printed to
 stderr. Failures (network, rate limit, no releases yet) are silent - an
 update hint must never break or slow a working command.
 
+The check is the only network request Cove makes. It sends nothing but a
+plain GET for the public release metadata (no profile data, no identifiers
+beyond what any HTTPS request reveals). Disable it with the environment
+variable COVE_NO_UPDATE_CHECK=1 or `update_check = false` in config.toml.
+
 When this repo starts shipping frozen artifacts (AppImage etc.), port the
 full UpdateController from cove-pdf-editor (sha256-verified download and
 versioned-filename AppImage swap) instead of extending this module.
@@ -12,10 +17,16 @@ versioned-filename AppImage swap) instead of extending this module.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import urllib.request
 
 GITHUB_REPO = "Sin213/cove-easy-optout"
+DISABLE_ENV_VAR = "COVE_NO_UPDATE_CHECK"
+
+
+def update_check_disabled_by_env() -> bool:
+    return os.environ.get(DISABLE_ENV_VAR, "").strip().lower() not in ("", "0", "false", "no")
 
 
 def _parse_version(v: str) -> tuple[int, int, int]:
@@ -57,6 +68,8 @@ def fetch_latest_release(repo: str = GITHUB_REPO, timeout: float = 4.0) -> dict 
 
 def maybe_notify_update(current_version: str) -> None:
     """Print a one-line stderr notice if a newer release is published."""
+    if update_check_disabled_by_env():
+        return
     data = fetch_latest_release()
     if data is None:
         return
